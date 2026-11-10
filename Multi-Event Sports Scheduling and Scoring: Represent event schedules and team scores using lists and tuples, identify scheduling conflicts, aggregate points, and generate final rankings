@@ -1,0 +1,92 @@
+ # Multi-Event Sports Scheduling and Scoring
+# Event schedule using tuples
+events = [
+    ("Cricket", "09:00", "10:00", "Ground1"),
+    ("Football", "09:30", "10:30", "Ground2"),
+    ("Volleyball", "11:00", "12:00", "Ground1"),
+    ("Basketball", "10:00", "11:00", "Ground2")
+]
+
+# Team scores using lists
+teams = {
+    "Team A": [10, 20, 15, 10],
+    "Team B": [20, 10, 10, 15],
+    "Team C": [15, 15, 20, 10]
+}
+
+# Check scheduling conflicts
+print("EVENT SCHEDULE")
+print("----------------")
+
+for event in events:
+    print(event)
+
+print("\nSCHEDULING CONFLICTS")
+print("--------------------")
+
+conflict_found = False
+
+for i in range(len(events)):
+    for j in range(i + 1, len(events)):
+
+        name1, start1, end1, place1 = events[i]
+        name2, start2, end2, place2 = events[j]
+
+        # Check overlapping time in the same location
+        if place1 == place2:
+            if start1 < end2 and start2 < end1:
+                print(name1, "and", name2,
+                      "have a conflict at", place1)
+                conflict_found = True
+
+if not conflict_found:
+    print("No scheduling conflicts found.")
+
+# Calculate total points
+print("\nTEAM TOTAL SCORES")
+print("-----------------")
+
+total_scores = {}
+
+for team in teams:
+    total = sum(teams[team])
+    total_scores[team] = total
+    print(team, ":", total)
+
+# Generate final rankings
+print("\nFINAL TEAM RANKINGS")
+print("-------------------")
+
+ranking = sorted(total_scores.items(),
+                 key=lambda x: x[1],
+                 reverse=True)
+
+rank = 1
+
+for team, score in ranking:
+    print(rank, team, "-", score, "points")
+    rank += 1
+
+output :
+EVENT SCHEDULE
+----------------
+('Cricket', '09:00', '10:00', 'Ground1')
+('Football', '09:30', '10:30', 'Ground2')
+('Volleyball', '11:00', '12:00', 'Ground1')
+('Basketball', '10:00', '11:00', 'Ground2')
+
+SCHEDULING CONFLICTS
+--------------------
+Football and Basketball have a conflict at Ground2
+
+TEAM TOTAL SCORES
+-----------------
+Team A : 55
+Team B : 55
+Team C : 60
+
+FINAL TEAM RANKINGS
+-------------------
+1 Team C - 60 points
+2 Team A - 55 points
+3 Team B - 55 pointsy
